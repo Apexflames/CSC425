@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSC 425 – Algorithms & Complexity Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0d3b66;
+  --accent: #1565c0;
+  --accent2: #00897b;
+  --light-bg: #eef2f7;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --muted: #546e7a;
+  --line: #cfd8dc;
+  --yellow-l: #fff8e1; --yellow-d: #e65100;
+  --green-l: #e8f5e9; --green-d: #2e7d32;
+  --blue-l: #e3f2fd; --blue-d: #0d47a1;
+  --red-l: #ffebee; --red-d: #b71c1c;
+  --teal-l: #e0f2f1; --teal-d: #00695c;
+  --purple-l: #f3e5f5; --purple-d: #6a1b9a;
+  --code-bg: #1e1e2e; --code-text: #cdd6f4;
+}
+[data-theme="dark"] {
+  --light-bg: #0f1923; --card-bg: #1a2535; --text: #e8eaf6;
+  --muted: #90a4ae; --line: #263548; --primary: #1e88e5;
+  --accent: #42a5f5; --yellow-l: #3e2800; --yellow-d: #ffcc80;
+  --green-l: #1b3a1b; --green-d: #81c784; --blue-l: #0d2245; --blue-d: #90caf9;
+  --red-l: #3e1515; --red-d: #ef9a9a; --teal-l: #0a2e2b; --teal-d: #80cbc4;
+  --purple-l: #2a0a3a; --purple-d: #ce93d8;
+  --code-bg: #0d1117; --code-text: #cdd6f4;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;font-size:14.5px;line-height:1.75;color:var(--text);background:var(--light-bg);transition:background .3s,color .3s;}
+.shell{max-width:900px;margin:0 auto;}
+
+/* NAV */
+.toc-bar{position:sticky;top:0;z-index:200;background:var(--primary);padding:0 14px;display:flex;align-items:center;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;box-shadow:0 3px 14px rgba(0,0,0,.35);transition:background .3s;}
+.toc-bar::-webkit-scrollbar{display:none;}
+.toc-brand{color:white;font-weight:800;font-size:12.5px;letter-spacing:.08em;padding:11px 14px 11px 4px;border-right:1px solid rgba(255,255,255,.2);margin-right:6px;flex-shrink:0;white-space:nowrap;font-family:'Playfair Display',serif;}
+.toc-bar a{color:rgba(255,255,255,.72);text-decoration:none;font-size:10.5px;font-weight:600;letter-spacing:.03em;white-space:nowrap;padding:11px 9px;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;flex-shrink:0;}
+.toc-bar a:hover{color:white;border-bottom-color:#90caf9;}
+.dark-toggle{margin-left:auto;flex-shrink:0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.05em;transition:background .2s;white-space:nowrap;}
+.dark-toggle:hover{background:rgba(255,255,255,.25);}
+
+/* CARDS */
+.page-card{background:var(--card-bg);margin:22px 12px;border-radius:14px;overflow:hidden;box-shadow:0 2px 20px rgba(13,59,102,.1);transition:background .3s;}
+.page-card+.page-card{margin-top:30px;}
+
+/* COVER */
+.cover{background:linear-gradient(135deg,#0d3b66 0%,#1a237e 50%,#1565c0 100%);min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 24px 44px;text-align:center;}
+.cover-label{font-size:11px;letter-spacing:.35em;color:#90caf9;font-weight:700;margin-bottom:12px;text-transform:uppercase;}
+.cover h1{font-family:'Playfair Display',serif;font-size:clamp(28px,8vw,54px);font-weight:800;color:white;line-height:1.1;margin-bottom:8px;}
+.cover-sub{font-size:clamp(13px,4vw,17px);color:#bbdefb;font-weight:400;margin-bottom:20px;}
+.cover-line{width:80px;height:3px;background:#90caf9;border-radius:2px;margin:0 auto 20px;opacity:.8;}
+.cover-desc{font-size:13px;color:rgba(187,222,251,.85);line-height:2;}
+.cover-session{margin-top:28px;font-size:11px;color:rgba(144,202,249,.55);letter-spacing:.14em;}
+.info-strip{background:var(--blue-l);padding:14px 22px;font-size:13px;color:var(--text);border-top:3px solid var(--accent);transition:background .3s,color .3s;}
+.info-strip strong{color:var(--blue-d);}
+
+/* TOPIC BANNER */
+.topic-banner{background:var(--primary);color:white;padding:15px 22px 13px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;transition:background .3s;}
+.topic-num{background:rgba(255,255,255,.2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;}
+.topic-title{font-family:'Playfair Display',serif;font-size:clamp(16px,5vw,22px);font-weight:700;line-height:1.2;}
+.topic-sub{font-size:11px;opacity:.6;font-weight:400;display:block;margin-top:2px;}
+.page-pill{margin-left:auto;background:rgba(255,255,255,.16);border-radius:20px;padding:3px 12px;font-size:10.5px;font-weight:700;flex-shrink:0;}
+
+/* BODY */
+.card-body{padding:22px 22px 26px;}
+.section-h{background:var(--accent);color:white;padding:8px 22px;font-size:13.5px;font-weight:700;letter-spacing:.01em;margin:24px -22px 16px;}
+.card-body>.section-h:first-child{margin-top:-22px;}
+p{margin-bottom:11px;font-size:13.5px;color:var(--text);}
+ul,ol{margin:8px 0 14px 24px;}
+li{margin-bottom:6px;font-size:13.5px;color:var(--text);}
+strong{color:var(--primary);}
+[data-theme="dark"] strong{color:var(--accent);}
+
+/* CALLOUTS */
+.box{border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13.5px;}
+.box-title{font-weight:700;font-size:12.5px;letter-spacing:.03em;margin-bottom:6px;text-transform:uppercase;}
+.box-yellow{background:var(--yellow-l);border-left:4px solid #f9a825;}
+.box-yellow .box-title{color:var(--yellow-d);}
+.box-green{background:var(--green-l);border-left:4px solid #43a047;}
+.box-green .box-title{color:var(--green-d);}
+.box-blue{background:var(--blue-l);border-left:4px solid var(--accent);}
+.box-blue .box-title{color:var(--blue-d);}
+.box-red{background:var(--red-l);border-left:4px solid #e53935;}
+.box-red .box-title{color:var(--red-d);}
+.box-teal{background:var(--teal-l);border-left:4px solid #00897b;}
+.box-teal .box-title{color:var(--teal-d);}
+.box-purple{background:var(--purple-l);border-left:4px solid #8e24aa;}
+.box-purple .box-title{color:var(--purple-d);}
+
+/* CODE */
+.code-wrap{margin:16px 0 20px;border-radius:10px;overflow:hidden;}
+.code-label{background:#263548;color:#90caf9;font-size:11px;font-weight:700;padding:7px 14px;display:flex;align-items:center;gap:10px;letter-spacing:.05em;}
+.code-label .dot{width:10px;height:10px;border-radius:50%;}
+.dot-r{background:#ff5f57;} .dot-y{background:#febc2e;} .dot-g{background:#28c840;}
+pre{background:var(--code-bg);color:var(--code-text);font-family:'Fira Code',monospace;font-size:12.5px;padding:16px 18px;overflow-x:auto;margin:0;line-height:1.7;}
+code{font-family:'Fira Code',monospace;font-size:12px;}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:14px 0 18px;border-radius:8px;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:300px;}
+th{background:var(--accent);color:white;padding:10px 13px;text-align:left;font-weight:700;font-size:12.5px;}
+td{padding:9px 13px;border:1px solid var(--line);vertical-align:top;color:var(--text);}
+tr:nth-child(even) td{background:var(--blue-l);}
+[data-theme="dark"] tr:nth-child(even) td{background:#1e2d3d;}
+
+/* TOGGLE SECTIONS */
+.toggle-section{border:1.5px solid var(--line);border-radius:8px;margin:14px 0;overflow:hidden;transition:border-color .2s;}
+.toggle-header{background:var(--blue-l);padding:11px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:13px;color:var(--blue-d);transition:background .2s;user-select:none;}
+[data-theme="dark"] .toggle-header{color:#90caf9;}
+.toggle-header:hover{background:var(--line);}
+.toggle-arrow{font-size:16px;transition:transform .3s;}
+.toggle-content{display:none;padding:16px;font-size:13.5px;}
+.toggle-section.open .toggle-arrow{transform:rotate(180deg);}
+.toggle-section.open .toggle-content{display:block;}
+
+/* SORT VISUALIZER */
+.sort-viz-wrap{background:var(--code-bg);border-radius:10px;overflow:hidden;margin:16px 0;}
+.sort-viz-header{background:#263548;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.sort-viz-title{color:#90caf9;font-weight:700;font-size:12px;letter-spacing:.05em;}
+.sort-viz-controls{display:flex;gap:6px;flex-wrap:wrap;}
+.viz-btn{padding:5px 14px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.02em;}
+.viz-btn-play{background:#28c840;color:#000;}
+.viz-btn-play:hover{background:#1fa330;}
+.viz-btn-reset{background:#febc2e;color:#000;}
+.viz-btn-reset:hover{background:#d9a126;}
+.viz-btn-step{background:#42a5f5;color:#000;}
+.viz-btn-step:hover{background:#1e88e5;}
+.sort-canvas{padding:20px 16px 10px;min-height:120px;display:flex;align-items:flex-end;justify-content:center;gap:4px;}
+.sort-bar{display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .3s ease;}
+.sort-bar-inner{border-radius:4px 4px 0 0;min-width:28px;transition:all .3s ease;display:flex;align-items:flex-end;justify-content:center;}
+.sort-bar-label{color:#cdd6f4;font-size:11px;font-weight:700;font-family:'Fira Code',monospace;}
+.bar-default{background:linear-gradient(180deg,#42a5f5,#1565c0);}
+.bar-comparing{background:linear-gradient(180deg,#febc2e,#e65100)!important;}
+.bar-swapping{background:linear-gradient(180deg,#ff5f57,#c62828)!important;}
+.bar-sorted{background:linear-gradient(180deg,#28c840,#1b5e20)!important;}
+.bar-pivot{background:linear-gradient(180deg,#ce93d8,#6a1b9a)!important;}
+.sort-status{padding:8px 16px;color:#90caf9;font-size:11.5px;font-family:'Fira Code',monospace;min-height:32px;border-top:1px solid #263548;}
+.sort-step-info{padding:4px 16px 10px;color:#81c784;font-size:11px;font-family:'Fira Code',monospace;min-height:24px;}
+.speed-control{display:flex;align-items:center;gap:8px;}
+.speed-control label{color:#90caf9;font-size:11px;}
+.speed-control input{width:80px;cursor:pointer;accent-color:#42a5f5;}
+
+/* DIVIDERS */
+.sub-sep{margin:26px 0;border:none;border-top:2px dashed var(--line);}
+
+/* EXAM QUESTIONS */
+.exam-q{border:1.5px solid var(--line);border-radius:10px;margin:16px 0;overflow:hidden;}
+.exam-q-header{background:var(--accent);color:white;padding:10px 18px;font-size:13.5px;font-weight:700;line-height:1.4;display:flex;gap:12px;align-items:flex-start;}
+.q-num{background:rgba(255,255,255,.25);border-radius:50%;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
+.exam-q-body{padding:14px 18px;background:var(--card-bg);transition:background .3s;}
+.exam-q-body .hint{display:inline-block;background:var(--teal-l);color:var(--teal-d);border-radius:5px;padding:4px 10px;font-size:11.5px;font-weight:700;margin-top:10px;}
+.ans-snippet{background:var(--green-l);border-left:4px solid #43a047;padding:12px 16px;border-radius:0 8px 8px 0;margin-top:10px;font-size:13px;color:var(--text);}
+.ans-snippet strong{color:var(--green-d);}
+[data-theme="dark"] .ans-snippet strong{color:#81c784;}
+.past-q-badge{display:inline-block;background:#e53935;color:white;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;margin-bottom:8px;}
+.likely-badge{display:inline-block;background:#f9a825;color:#000;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;margin-bottom:8px;}
+
+/* CHIP */
+.chip{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11.5px;font-weight:700;margin:2px 3px;}
+.chip-blue{background:var(--blue-l);color:var(--blue-d);}
+.chip-green{background:var(--green-l);color:var(--green-d);}
+.chip-yellow{background:var(--yellow-l);color:var(--yellow-d);}
+.chip-red{background:var(--red-l);color:var(--red-d);}
+
+/* CARD FOOTER */
+.card-footer{background:var(--primary);padding:7px 22px;display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:rgba(255,255,255,.55);transition:background .3s;}
+.card-footer strong{color:rgba(255,255,255,.9);font-weight:700;}
+
+/* END CARD */
+.end-card{background:linear-gradient(135deg,#0d3b66,#1565c0);color:white;margin:22px 12px 40px;border-radius:14px;padding:36px 24px;text-align:center;}
+.end-card h2{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:12px;}
+.end-card p{color:rgba(255,255,255,.75);font-size:13.5px;}
+
+/* COMPLEXITY TABLE */
+.complexity-row-o1{background:#e8f5e9!important;} 
+.complexity-row-ologn{background:#f3e5f5!important;}
+.complexity-row-on{background:#e3f2fd!important;}
+.complexity-row-onlogn{background:#fff8e1!important;}
+.complexity-row-on2{background:#ffebee!important;}
+
+/* RECURRENCE STEPS */
+.rec-step{background:var(--blue-l);border:1.5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:13px;}
+.rec-step strong{color:var(--blue-d);}
+[data-theme="dark"] .rec-step{background:#0d2245;}
+[data-theme="dark"] .rec-step strong{color:#90caf9;}
+
+@media(max-width:480px){
+  .sort-bar-inner{min-width:22px;}
+  .sort-bar-label{font-size:10px;}
+  .viz-btn{padding:4px 10px;font-size:11px;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- NAV -->
+<nav class="toc-bar">
+  <div class="toc-brand">CSC 425</div>
+  <a href="#ch1">Intro</a>
+  <a href="#ch2">Sorting</a>
+  <a href="#ch3">Complexity</a>
+  <a href="#ch4">Recurrence</a>
+  <a href="#ch5">D&amp;C</a>
+  <a href="#ch6">NP</a>
+  <a href="#ch7">Past Q's</a>
+  <a href="#ch8">Likely Q's</a>
+  <button class="dark-toggle" id="themeBtn" onclick="toggleDark()">🌙 Dark</button>
+</nav>
+
+<!-- COVER -->
+<div class="page-card">
+  <div class="cover">
+    <div class="cover-label">B.Sc. Computer Science · CSC 425</div>
+    <h1>Algorithms &amp;<br>Complexity Analysis</h1>
+    <div class="cover-sub">A plain-English study companion with interactive visualisations</div>
+    <div class="cover-line"></div>
+    <div class="cover-desc">
+      What is an Algorithm &amp; NP &nbsp;|&nbsp; Sorting Algorithms (animated!)<br>
+      Big-O, Omega, Theta, Little-o Notations &nbsp;|&nbsp; Recurrence Relations<br>
+      Divide &amp; Conquer &nbsp;|&nbsp; Trees &amp; Binary Search &nbsp;|&nbsp; Full Exam Q&amp;A Bank
+    </div>
+    <div class="cover-session">Adekunle Ajasin University · 2024/2025 Session · Dept. of Computer Science</div>
+  </div>
+  <div class="info-strip">
+    <strong>📖 HOW TO USE THIS GUIDE:</strong> Tap any <strong>"▼ Click to expand"</strong> section to reveal content. Use the <strong>▶ Play</strong> buttons on the sorting animations to watch exactly how each sort works step-by-step. Scroll to the end for <strong>past exam questions</strong> with full answers, and <strong>likely exam questions</strong> with model answers. Toggle dark/light mode in the top bar.
+  </div>
+</div>
+
+
+<!-- ═══ CHAPTER 1: INTRODUCTION ═══ -->
+<div class="page-card" id="ch1">
+  <div class="topic-banner">
+    <div class="topic-num">1</div>
+    <div>
+      <div class="topic-title">Introduction to Algorithms</div>
+      <span class="topic-sub">Definition, Applications, NP-Complete, Linear vs Binary Search</span>
+    </div>
+    <div class="page-pill">Topic 1</div>
+  </div>
+  <div class="card-body">
+
+    <div class="section-h">1.1 What is an Algorithm?</div>
+    <p>An <strong>algorithm</strong> is a finite, step-by-step set of well-defined instructions used to solve a problem or accomplish a task. It takes an input, processes it, and produces an output.</p>
+
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      Think of an algorithm like a recipe. A recipe tells you exactly what ingredients to use and what steps to follow to make a dish. An algorithm does the same thing for a computer — it's the exact steps the computer must follow to solve a problem.
+    </div>
+
+    <p><strong>Key properties every algorithm must have:</strong></p>
+    <ul>
+      <li><strong>Input</strong> — it takes zero or more values as input</li>
+      <li><strong>Output</strong> — it produces at least one result</li>
+      <li><strong>Definiteness</strong> — every step is clearly and unambiguously defined</li>
+      <li><strong>Finiteness</strong> — it must terminate (end) after a finite number of steps</li>
+      <li><strong>Effectiveness</strong> — every step must be basic and doable</li>
+    </ul>
+
+    <div class="section-h">1.2 Algorithm is a Technology</div>
+    <p>An algorithm is considered a <strong>technology</strong> because just like hardware, it is something that can be developed, improved, patented, and used to create competitive advantages. A better algorithm can solve problems millions of times faster than a slow one — even on the same hardware.</p>
+    <div class="box box-blue">
+      <div class="box-title">💡 Real-Life Example</div>
+      Google's search algorithm is a technology. It's the reason Google can search billions of web pages in less than a second. Two computers with the same hardware but different algorithms will perform wildly differently. That is why algorithm design is a fundamental skill in Computer Science.
+    </div>
+
+    <div class="section-h">1.3 Two Applications of Algorithms</div>
+    <ul>
+      <li><strong>Sorting Data:</strong> Used in databases, contact lists, grade books — arranging data in order so it can be searched quickly.</li>
+      <li><strong>Routing/Navigation:</strong> GPS apps (Google Maps) use shortest-path algorithms to find the fastest route between two places.</li>
+    </ul>
+
+    <div class="section-h">1.4 What is an NP-Complete Problem?</div>
+    <p>A problem is <strong>NP-Complete</strong> if:</p>
+    <ol>
+      <li>It is in the class <strong>NP</strong> — meaning if someone gives you a solution, you can <em>verify</em> it quickly (in polynomial time).</li>
+      <li>Every other NP problem can be <em>reduced</em> to it — it is at least as hard as every problem in NP.</li>
+    </ol>
+    <div class="box box-red">
+      <div class="box-title">⚠️ The Big Question: P = NP?</div>
+      No one knows whether NP-Complete problems can be <em>solved</em> quickly (in polynomial time). If you prove P = NP, you'd win $1,000,000 from the Clay Mathematics Institute. Currently, the best algorithms for NP-Complete problems take exponential time, making them infeasible for large inputs.
+    </div>
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      Think of it this way: checking if a jigsaw puzzle is solved correctly is easy (NP-verifiable). But actually solving it from scratch (finding which piece goes where) is very hard. NP-Complete problems are like that — easy to check, but very hard to solve.
+    </div>
+    <p><strong>Examples of NP-Complete problems:</strong> Travelling Salesman Problem (TSP), Boolean Satisfiability (SAT), Knapsack Problem, Graph Colouring.</p>
+
+    <div class="section-h">1.5 Linear Search vs Binary Search</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Linear Search</th><th>Binary Search</th></tr>
+        <tr><td><strong>How it works</strong></td><td>Check every element one by one from start to end</td><td>Start at the middle; discard half the list each time</td></tr>
+        <tr><td><strong>Requires sorted data?</strong></td><td>No — works on unsorted data</td><td>Yes — data MUST be sorted first</td></tr>
+        <tr><td><strong>Best case</strong></td><td>O(1) — first element is the target</td><td>O(1) — middle element is the target</td></tr>
+        <tr><td><strong>Worst case</strong></td><td>O(n) — check all n elements</td><td>O(log n) — halves the list each time</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Small or unsorted lists</td><td>Large sorted lists</td></tr>
+        <tr><td><strong>Real-life analogy</strong></td><td>Checking every item in a bag one by one</td><td>Looking up a name in a phone book (go to middle, decide left or right)</td></tr>
+      </table>
+    </div>
+
+    <div class="toggle-section" id="ts-binsearch">
+      <div class="toggle-header" onclick="tog('ts-binsearch')">
+        ▼ Binary Search — Step-by-step example (click to expand)
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="toggle-content">
+        <p>Find <strong>7</strong> in: [1, 3, 5, 7, 9, 11, 13]</p>
+        <ol>
+          <li>Middle = index 3 → value <strong>7</strong>. Compare: 7 == 7 ✅ Found! Done in 1 step.</li>
+        </ol>
+        <hr style="margin:10px 0;">
+        <p>Find <strong>11</strong> in: [1, 3, 5, 7, 9, 11, 13]</p>
+        <ol>
+          <li>Low=0, High=6 → Mid=3, value=7. 11 &gt; 7, so search RIGHT half.</li>
+          <li>Low=4, High=6 → Mid=5, value=11. 11 == 11 ✅ Found in 2 steps!</li>
+        </ol>
+        <div class="box box-green"><div class="box-title">Key Insight</div>Binary search cuts the problem in half each time. For 1,000,000 elements, it takes at most 20 comparisons. Linear search would take up to 1,000,000.</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Topic 1</span><strong>Algorithms — Foundations</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 2: SORTING ═══ -->
+<div class="page-card" id="ch2">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#00695c,#00897b);">
+    <div class="topic-num">2</div>
+    <div>
+      <div class="topic-title">Sorting Algorithms</div>
+      <span class="topic-sub">Bubble Sort · Selection Sort · Insertion Sort · Merge Sort · Quick Sort</span>
+    </div>
+    <div class="page-pill">Topic 2 — Interactive</div>
+  </div>
+  <div class="card-body">
+
+    <div class="box box-teal">
+      <div class="box-title">📌 What is Sorting?</div>
+      Sorting means arranging a list of items in a specific order — either <strong>ascending</strong> (smallest to largest) or <strong>descending</strong> (largest to smallest). Sorting is one of the most fundamental operations in Computer Science because searching and many other algorithms are much faster on sorted data.
+    </div>
+
+    <!-- ===== BUBBLE SORT ===== -->
+    <div class="section-h">2.1 Bubble Sort</div>
+    <p><strong>Bubble Sort</strong> repeatedly compares two neighbouring (adjacent) elements and swaps them if they are in the wrong order. The largest element "bubbles up" to its correct position with each pass.</p>
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      Imagine you're arranging students in a line by height. You walk along the line, and every time you see a taller student standing before a shorter one, you swap them. You keep walking the line again and again until no more swaps are needed.
+    </div>
+
+    <div class="toggle-section" id="ts-bubble-pseudo">
+      <div class="toggle-header" onclick="tog('ts-bubble-pseudo')">▼ Bubble Sort — Pseudocode (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>PSEUDOCODE — Bubble Sort</div>
+<pre>BubbleSort(A[n])
+  for i = 1 to n-1 do
+    for j = 1 to n-i do
+      if A[j] > A[j+1] then
+        swap A[j] and A[j+1]
+      end if
+    end for
+  end for</pre></div>
+        <p><strong>How to read this:</strong> The outer loop runs n-1 times (we need at most n-1 passes). The inner loop compares adjacent pairs. After pass 1, the largest element is at the end. After pass 2, the second largest is in place. And so on.</p>
+      </div>
+    </div>
+
+    <!-- BUBBLE SORT VISUALIZER -->
+    <div class="sort-viz-wrap" id="viz-bubble">
+      <div class="sort-viz-header">
+        <div class="sort-viz-title">🫧 BUBBLE SORT — LIVE ANIMATION</div>
+        <div class="sort-viz-controls">
+          <div class="speed-control"><label>Speed:</label><input type="range" id="speed-bubble" min="100" max="1000" value="600" step="100"></div>
+          <button class="viz-btn viz-btn-reset" onclick="resetViz('bubble')">↺ Reset</button>
+          <button class="viz-btn viz-btn-step" onclick="stepViz('bubble')">⏭ Step</button>
+          <button class="viz-btn viz-btn-play" id="play-bubble" onclick="playViz('bubble')">▶ Play</button>
+        </div>
+      </div>
+      <div class="sort-canvas" id="canvas-bubble"></div>
+      <div class="sort-status" id="status-bubble">Press ▶ Play to watch Bubble Sort in action, or ⏭ Step to go one step at a time.</div>
+      <div class="sort-step-info" id="stepinfo-bubble"></div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <tr><th>Case</th><th>Time Complexity</th><th>Why?</th></tr>
+      <tr><td><strong>Best Case</strong></td><td class="complexity-row-on">O(n)</td><td>Already sorted — one pass, no swaps needed</td></tr>
+      <tr><td><strong>Average Case</strong></td><td class="complexity-row-on2">O(n²)</td><td>Random order — many comparisons and swaps</td></tr>
+      <tr><td><strong>Worst Case</strong></td><td class="complexity-row-on2">O(n²)</td><td>Reverse sorted — maximum swaps every pass</td></tr>
+      <tr><td><strong>Space</strong></td><td class="complexity-row-o1">O(1)</td><td>Only needs a temp variable for swapping</td></tr>
+    </table></div>
+
+    <hr class="sub-sep">
+
+    <!-- ===== SELECTION SORT ===== -->
+    <div class="section-h">2.2 Selection Sort</div>
+    <p><strong>Selection Sort</strong> finds the smallest element in the unsorted part of the list and places it at the beginning. It repeatedly "selects" the minimum element.</p>
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      You have a pile of numbered cards face down. You flip them all, find the smallest number, bring it to the front. Then from the remaining cards, find the next smallest, put it second. Keep going until all cards are in order.
+    </div>
+
+    <div class="toggle-section" id="ts-selection-pseudo">
+      <div class="toggle-header" onclick="tog('ts-selection-pseudo')">▼ Selection Sort — Pseudocode (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>PSEUDOCODE — Selection Sort</div>
+<pre>SelectionSort(A, n)
+  for k = 1 to n-1 do
+    min = k
+    for i = k+1 to n do
+      if A[i] < A[min] then
+        min = i
+      end if
+    end for
+    swap A[k] and A[min]
+  end for</pre></div>
+        <p><strong>Key difference from Bubble Sort:</strong> Bubble Sort swaps as it goes. Selection Sort makes one swap per pass (swapping the minimum to its correct position).</p>
+      </div>
+    </div>
+
+    <div class="sort-viz-wrap" id="viz-selection">
+      <div class="sort-viz-header">
+        <div class="sort-viz-title">🎯 SELECTION SORT — LIVE ANIMATION</div>
+        <div class="sort-viz-controls">
+          <div class="speed-control"><label>Speed:</label><input type="range" id="speed-selection" min="100" max="1000" value="600" step="100"></div>
+          <button class="viz-btn viz-btn-reset" onclick="resetViz('selection')">↺ Reset</button>
+          <button class="viz-btn viz-btn-step" onclick="stepViz('selection')">⏭ Step</button>
+          <button class="viz-btn viz-btn-play" id="play-selection" onclick="playViz('selection')">▶ Play</button>
+        </div>
+      </div>
+      <div class="sort-canvas" id="canvas-selection"></div>
+      <div class="sort-status" id="status-selection">Press ▶ Play or ⏭ Step.</div>
+      <div class="sort-step-info" id="stepinfo-selection"></div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <tr><th>Case</th><th>Time Complexity</th><th>Why?</th></tr>
+      <tr><td><strong>Best / Avg / Worst</strong></td><td class="complexity-row-on2">O(n²)</td><td>Always scans the whole unsorted part to find minimum</td></tr>
+      <tr><td><strong>Space</strong></td><td class="complexity-row-o1">O(1)</td><td>In-place sorting</td></tr>
+    </table></div>
+
+    <hr class="sub-sep">
+
+    <!-- ===== INSERTION SORT ===== -->
+    <div class="section-h">2.3 Insertion Sort</div>
+    <p><strong>Insertion Sort</strong> builds a sorted list one element at a time. It takes each new element and inserts it into the correct position in the already-sorted part of the list.</p>
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      Think of how you sort playing cards in your hand. You pick up cards one at a time, and each new card gets slotted into the right place among the cards you already hold. The left side of your hand is always sorted.
+    </div>
+
+    <div class="toggle-section" id="ts-insertion-pseudo">
+      <div class="toggle-header" onclick="tog('ts-insertion-pseudo')">▼ Insertion Sort — Full Pseudocode (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>PSEUDOCODE — Insertion Sort</div>
+<pre>InsertionSort(A, n)
+  for i = 2 to n do
+    key = A[i]         // Pick the current element
+    j = i - 1
+    while j >= 1 and A[j] > key do
+      A[j+1] = A[j]   // Shift element right
+      j = j - 1
+    end while
+    A[j+1] = key       // Insert key in correct position
+  end for</pre></div>
+        <p><strong>Step-by-step on [5, 2, 4, 6, 1]:</strong></p>
+        <ol>
+          <li>i=2, key=2: Compare 2 with 5 → 5 > 2, shift 5 right → [2, 5, 4, 6, 1]</li>
+          <li>i=3, key=4: Compare 4 with 5 → 5 > 4, shift. Compare 4 with 2 → stop. Insert → [2, 4, 5, 6, 1]</li>
+          <li>i=4, key=6: 6 > 5, no shift → [2, 4, 5, 6, 1]</li>
+          <li>i=5, key=1: Shift 6, 5, 4, 2 right. Insert 1 → [1, 2, 4, 5, 6] ✅</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="sort-viz-wrap" id="viz-insertion">
+      <div class="sort-viz-header">
+        <div class="sort-viz-title">🃏 INSERTION SORT — LIVE ANIMATION</div>
+        <div class="sort-viz-controls">
+          <div class="speed-control"><label>Speed:</label><input type="range" id="speed-insertion" min="100" max="1000" value="600" step="100"></div>
+          <button class="viz-btn viz-btn-reset" onclick="resetViz('insertion')">↺ Reset</button>
+          <button class="viz-btn viz-btn-step" onclick="stepViz('insertion')">⏭ Step</button>
+          <button class="viz-btn viz-btn-play" id="play-insertion" onclick="playViz('insertion')">▶ Play</button>
+        </div>
+      </div>
+      <div class="sort-canvas" id="canvas-insertion"></div>
+      <div class="sort-status" id="status-insertion">Press ▶ Play or ⏭ Step.</div>
+      <div class="sort-step-info" id="stepinfo-insertion"></div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <tr><th>Case</th><th>Time Complexity</th><th>Why?</th></tr>
+      <tr><td><strong>Best Case</strong></td><td class="complexity-row-on">O(n)</td><td>Already sorted — inner while never runs</td></tr>
+      <tr><td><strong>Average Case</strong></td><td class="complexity-row-on2">O(n²)</td><td>Each insert shifts ~n/2 elements on average</td></tr>
+      <tr><td><strong>Worst Case</strong></td><td class="complexity-row-on2">O(n²)</td><td>Reverse sorted — each element shifts all the way</td></tr>
+      <tr><td><strong>Space</strong></td><td class="complexity-row-o1">O(1)</td><td>In-place</td></tr>
+    </table></div>
+
+    <hr class="sub-sep">
+
+    <!-- ===== MERGE SORT ===== -->
+    <div class="section-h">2.4 Merge Sort</div>
+    <p><strong>Merge Sort</strong> uses the <strong>Divide and Conquer</strong> strategy. It splits the array in half, recursively sorts each half, then merges the two sorted halves back together.</p>
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      Imagine you have a deck of cards to sort. You split it into two piles, sort each pile separately (by doing the same thing — splitting again and again until piles have one card), then you merge the two sorted piles into one by always picking the smaller top card.
+    </div>
+
+    <div class="toggle-section" id="ts-merge-pseudo">
+      <div class="toggle-header" onclick="tog('ts-merge-pseudo')">▼ Merge Sort — Full Pseudocode (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>PSEUDOCODE — Merge Sort</div>
+<pre>MergeSort(A, low, high)
+  if low < high then
+    mid = (low + high) / 2
+    MergeSort(A, low, mid)       // Sort left half
+    MergeSort(A, mid+1, high)    // Sort right half
+    Merge(A, low, mid, high)     // Merge both halves
+  end if
+
+Merge(A, low, mid, high)
+  i = low;  j = mid+1;  k = low
+  while i <= mid AND j <= high do
+    if A[i] <= A[j] then
+      B[k] = A[i];  i = i+1
+    else
+      B[k] = A[j];  j = j+1
+    end if
+    k = k+1
+  end while
+  Copy remaining elements of left or right into B
+  Copy B back into A</pre></div>
+      </div>
+    </div>
+
+    <div class="sort-viz-wrap" id="viz-merge">
+      <div class="sort-viz-header">
+        <div class="sort-viz-title">🔀 MERGE SORT — LIVE ANIMATION</div>
+        <div class="sort-viz-controls">
+          <div class="speed-control"><label>Speed:</label><input type="range" id="speed-merge" min="100" max="1000" value="600" step="100"></div>
+          <button class="viz-btn viz-btn-reset" onclick="resetViz('merge')">↺ Reset</button>
+          <button class="viz-btn viz-btn-step" onclick="stepViz('merge')">⏭ Step</button>
+          <button class="viz-btn viz-btn-play" id="play-merge" onclick="playViz('merge')">▶ Play</button>
+        </div>
+      </div>
+      <div class="sort-canvas" id="canvas-merge"></div>
+      <div class="sort-status" id="status-merge">Press ▶ Play or ⏭ Step.</div>
+      <div class="sort-step-info" id="stepinfo-merge"></div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <tr><th>Case</th><th>Time Complexity</th><th>Why?</th></tr>
+      <tr><td><strong>Best / Avg / Worst</strong></td><td class="complexity-row-onlogn">O(n log n)</td><td>Always splits in half (log n levels) and merges (n work per level)</td></tr>
+      <tr><td><strong>Space</strong></td><td class="complexity-row-on">O(n)</td><td>Needs extra array B for merging</td></tr>
+    </table></div>
+    <div class="box box-blue"><div class="box-title">Why Merge Sort is different from Bubble/Selection/Insertion</div>Merge Sort runs in O(n log n) in ALL cases — best, average, and worst. The O(n²) sorts get slow very fast for large inputs. Merge Sort stays fast.</div>
+
+    <hr class="sub-sep">
+
+    <!-- ===== QUICK SORT ===== -->
+    <div class="section-h">2.5 Quick Sort</div>
+    <p><strong>Quick Sort</strong> also uses Divide and Conquer. It picks a <strong>pivot</strong> element, places it in its correct sorted position, puts all smaller elements to its left, and all larger elements to its right. Then it recursively sorts both sides.</p>
+    <div class="box box-yellow">
+      <div class="box-title">🗣️ Plain English</div>
+      You pick one person from a group and call them the "pivot." Everyone shorter stands to their left; everyone taller stands to their right. The pivot is now in exactly the right place. You then do the same thing to the left group and the right group — pick a pivot, split, repeat.
+    </div>
+
+    <div class="toggle-section" id="ts-quick-pseudo">
+      <div class="toggle-header" onclick="tog('ts-quick-pseudo')">▼ Quick Sort — Full Pseudocode (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>PSEUDOCODE — Quick Sort</div>
+<pre>QuickSort(A, low, high)
+  if low < high then
+    p = Partition(A, low, high)
+    QuickSort(A, low, p-1)   // Sort left of pivot
+    QuickSort(A, p+1, high)  // Sort right of pivot
+  end if
+
+Partition(A, low, high)
+  pivot = A[high]   // Last element as pivot
+  i = low - 1
+  for j = low to high-1 do
+    if A[j] <= pivot then
+      i = i + 1
+      swap A[i] and A[j]
+    end if
+  end for
+  swap A[i+1] and A[high]  // Place pivot in correct spot
+  return i+1</pre></div>
+        <div class="box box-purple"><div class="box-title">🔑 Purple = Pivot in the animation below</div>The pivot is highlighted in purple. Orange bars are being compared. Red means a swap is happening.</div>
+      </div>
+    </div>
+
+    <div class="sort-viz-wrap" id="viz-quick">
+      <div class="sort-viz-header">
+        <div class="sort-viz-title">⚡ QUICK SORT — LIVE ANIMATION</div>
+        <div class="sort-viz-controls">
+          <div class="speed-control"><label>Speed:</label><input type="range" id="speed-quick" min="100" max="1000" value="600" step="100"></div>
+          <button class="viz-btn viz-btn-reset" onclick="resetViz('quick')">↺ Reset</button>
+          <button class="viz-btn viz-btn-step" onclick="stepViz('quick')">⏭ Step</button>
+          <button class="viz-btn viz-btn-play" id="play-quick" onclick="playViz('quick')">▶ Play</button>
+        </div>
+      </div>
+      <div class="sort-canvas" id="canvas-quick"></div>
+      <div class="sort-status" id="status-quick">Press ▶ Play or ⏭ Step.</div>
+      <div class="sort-step-info" id="stepinfo-quick"></div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <tr><th>Case</th><th>Time Complexity</th><th>Why?</th></tr>
+      <tr><td><strong>Best Case</strong></td><td class="complexity-row-onlogn">O(n log n)</td><td>Pivot always lands in the middle (balanced splits)</td></tr>
+      <tr><td><strong>Average Case</strong></td><td class="complexity-row-onlogn">O(n log n)</td><td>Random pivot placement</td></tr>
+      <tr><td><strong>Worst Case</strong></td><td class="complexity-row-on2">O(n²)</td><td>Pivot is always min or max (sorted/reverse-sorted input)</td></tr>
+      <tr><td><strong>Space</strong></td><td class="complexity-row-ologn">O(log n)</td><td>Recursion stack</td></tr>
+    </table></div>
+
+    <hr class="sub-sep">
+
+    <!-- COMPARISON TABLE -->
+    <div class="section-h">2.6 Complete Sorting Algorithm Comparison</div>
+    <div class="table-wrap"><table>
+      <tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th><th>Stable?</th></tr>
+      <tr><td><strong>Bubble Sort</strong></td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>✅ Yes</td></tr>
+      <tr><td><strong>Selection Sort</strong></td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>❌ No</td></tr>
+      <tr><td><strong>Insertion Sort</strong></td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>✅ Yes</td></tr>
+      <tr><td><strong>Merge Sort</strong></td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>✅ Yes</td></tr>
+      <tr><td><strong>Quick Sort</strong></td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td><td>❌ No</td></tr>
+    </table></div>
+    <div class="box box-green"><div class="box-title">✅ Exam Tip</div>A <strong>stable sort</strong> preserves the relative order of equal elements. For example, if two students both scored 70, a stable sort keeps them in the same order as they appeared originally.</div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Topic 2</span><strong>Sorting Algorithms — All 5 with Animations</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 3: COMPLEXITY NOTATIONS ═══ -->
+<div class="page-card" id="ch3">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+    <div class="topic-num">3</div>
+    <div>
+      <div class="topic-title">Growth of Functions &amp; Complexity Notations</div>
+      <span class="topic-sub">Big-O · Omega · Theta · Little-o · Little-omega</span>
+    </div>
+    <div class="page-pill">Topic 3</div>
+  </div>
+  <div class="card-body">
+
+    <div class="section-h">3.1 Why Do We Need Notations?</div>
+    <p>When we analyse algorithms, we want to describe how fast they grow as the input size <strong>n</strong> gets very large. Instead of saying "this algorithm takes exactly 3n² + 5n + 2 operations," we use <strong>asymptotic notation</strong> to express the dominant behaviour and ignore constants.</p>
+    <div class="box box-yellow"><div class="box-title">🗣️ Plain English</div>If you earn ₦3,000,000 + ₦500 + ₦2, you'd just say "about ₦3 million." The smaller terms don't matter much. Same idea — when n is huge, only the fastest-growing term matters.</div>
+
+    <div class="section-h">3.2 Big-O Notation — Upper Bound (Worst Case)</div>
+    <p><strong>Big-O</strong> describes the <em>maximum</em> number of steps an algorithm can take. It gives us the worst-case scenario. We say f(n) = O(g(n)) if f(n) is eventually always ≤ c·g(n) for some constant c and all n ≥ n₀.</p>
+    <div class="box box-red"><div class="box-title">⚠️ Formal Definition</div>f(n) = O(g(n)) if there exist positive constants c and n₀ such that:<br><strong>0 ≤ f(n) ≤ c·g(n) for all n ≥ n₀</strong></div>
+    <div class="box box-yellow"><div class="box-title">🗣️ Plain English</div>Think of Big-O as a speed limit sign — it says "this algorithm will NEVER take more than this many steps." It's the ceiling.</div>
+
+    <p><strong>Examples:</strong></p>
+    <ul>
+      <li>f(n) = 3n² + 5n + 2 → <strong>O(n²)</strong> (drop constants and lower-order terms)</li>
+      <li>f(n) = 100 → <strong>O(1)</strong> (constant time)</li>
+      <li>f(n) = 2n + log n → <strong>O(n)</strong></li>
+    </ul>
+
+    <div class="section-h">3.3 Omega Notation (Ω) — Lower Bound (Best Case)</div>
+    <p><strong>Omega (Ω)</strong> describes the <em>minimum</em> number of steps. It gives us the best-case scenario. We say f(n) = Ω(g(n)) if f(n) is eventually always ≥ c·g(n).</p>
+    <div class="box box-green"><div class="box-title">Formal Definition</div>f(n) = Ω(g(n)) if there exist positive constants c and n₀ such that:<br><strong>0 ≤ c·g(n) ≤ f(n) for all n ≥ n₀</strong></div>
+    <div class="box box-yellow"><div class="box-title">🗣️ Plain English</div>Omega is the floor — the algorithm will take AT LEAST this many steps. Even in the best scenario, it can't be faster than this.</div>
+
+    <div class="section-h">3.4 Theta Notation (Θ) — Tight Bound (Average Case)</div>
+    <p><strong>Theta (Θ)</strong> means the function is both O(g(n)) and Ω(g(n)) simultaneously — the algorithm grows at <em>exactly</em> that rate (within constant factors).</p>
+    <div class="box box-blue"><div class="box-title">Formal Definition</div>f(n) = Θ(g(n)) if there exist positive constants c₁, c₂, and n₀ such that:<br><strong>c₁·g(n) ≤ f(n) ≤ c₂·g(n) for all n ≥ n₀</strong></div>
+    <div class="box box-yellow"><div class="box-title">🗣️ Plain English</div>Theta is the exact speed — sandwiched between a floor and ceiling. It's saying "the algorithm grows exactly like g(n), give or take a constant multiple."</div>
+
+    <div class="section-h">3.5 Little-o and Little-ω</div>
+    <ul>
+      <li><strong>Little-o (o):</strong> f(n) = o(g(n)) means f grows strictly slower than g. f(n)/g(n) → 0 as n → ∞. Stronger than Big-O.</li>
+      <li><strong>Little-omega (ω):</strong> f(n) = ω(g(n)) means f grows strictly faster than g. f(n)/g(n) → ∞ as n → ∞. Stronger than Omega.</li>
+    </ul>
+
+    <div class="section-h">3.6 Summary Table</div>
+    <div class="table-wrap"><table>
+      <tr><th>Notation</th><th>Meaning</th><th>Analogy</th><th>Formal</th></tr>
+      <tr><td><strong>O(g)</strong></td><td>Upper bound — at most</td><td>Speed limit (ceiling)</td><td>f ≤ c·g eventually</td></tr>
+      <tr><td><strong>Ω(g)</strong></td><td>Lower bound — at least</td><td>Minimum wage (floor)</td><td>f ≥ c·g eventually</td></tr>
+      <tr><td><strong>Θ(g)</strong></td><td>Tight bound — exactly</td><td>Exact salary range</td><td>c₁·g ≤ f ≤ c₂·g eventually</td></tr>
+      <tr><td><strong>o(g)</strong></td><td>Strictly less than</td><td>Strictly below ceiling</td><td>f/g → 0</td></tr>
+      <tr><td><strong>ω(g)</strong></td><td>Strictly greater than</td><td>Strictly above floor</td><td>f/g → ∞</td></tr>
+    </table></div>
+
+    <div class="section-h">3.7 Common Complexity Classes (Slowest to Fastest)</div>
+    <div class="table-wrap"><table>
+      <tr><th>Notation</th><th>Name</th><th>Example</th><th>n=10 ops</th><th>n=1000 ops</th></tr>
+      <tr><td class="complexity-row-o1"><strong>O(1)</strong></td><td>Constant</td><td>Array access</td><td>1</td><td>1</td></tr>
+      <tr><td class="complexity-row-ologn"><strong>O(log n)</strong></td><td>Logarithmic</td><td>Binary Search</td><td>3</td><td>10</td></tr>
+      <tr><td class="complexity-row-on"><strong>O(n)</strong></td><td>Linear</td><td>Linear Search</td><td>10</td><td>1,000</td></tr>
+      <tr><td class="complexity-row-onlogn"><strong>O(n log n)</strong></td><td>Linearithmic</td><td>Merge Sort</td><td>33</td><td>10,000</td></tr>
+      <tr><td class="complexity-row-on2"><strong>O(n²)</strong></td><td>Quadratic</td><td>Bubble Sort</td><td>100</td><td>1,000,000</td></tr>
+      <tr><td style="background:#ffebee"><strong>O(2ⁿ)</strong></td><td>Exponential</td><td>Brute-force TSP</td><td>1,024</td><td>2¹⁰⁰⁰ (impossible)</td></tr>
+    </table></div>
+
+    <div class="section-h">3.8 Best Case vs Worst Case</div>
+    <div class="box box-blue"><div class="box-title">💡 The Difference Explained</div>
+    <strong>Best Case:</strong> The input is in the most favourable condition for the algorithm. E.g., for Bubble Sort, if the list is already sorted, it only needs one pass → O(n).<br><br>
+    <strong>Worst Case:</strong> The input is in the least favourable condition. E.g., for Bubble Sort, if the list is in reverse order, it must do the maximum number of comparisons and swaps → O(n²).<br><br>
+    <strong>Average Case:</strong> The expected behaviour over all possible inputs, usually calculated using probability. For most sorts, this equals the worst case.
+    </div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Topic 3</span><strong>Complexity Notations — O, Ω, Θ, o, ω</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 4: RECURRENCE RELATIONS ═══ -->
+<div class="page-card" id="ch4">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#b71c1c,#e53935);">
+    <div class="topic-num">4</div>
+    <div>
+      <div class="topic-title">Recurrence Relations</div>
+      <span class="topic-sub">Substitution · Recursion Tree · Master Theorem</span>
+    </div>
+    <div class="page-pill">Topic 4</div>
+  </div>
+  <div class="card-body">
+
+    <div class="section-h">4.1 What is a Recurrence Relation?</div>
+    <p>A <strong>recurrence relation</strong> is an equation that expresses the running time of a recursive algorithm in terms of itself with a smaller input. For example, Merge Sort's running time T(n) depends on T(n/2).</p>
+    <div class="box box-yellow"><div class="box-title">🗣️ Plain English</div>Instead of saying "it takes exactly 500 steps," a recurrence says "it takes twice the time of half the problem, plus some extra work." We then solve that equation to find the closed-form answer.</div>
+    <p><strong>Example:</strong> Merge Sort → <code>T(n) = 2T(n/2) + O(n)</code>, with T(1) = O(1).</p>
+
+    <div class="section-h">4.2 Three Methods for Solving Recurrences</div>
+    <ol>
+      <li><strong>Substitution Method</strong> — Guess the solution and prove it by mathematical induction.</li>
+      <li><strong>Recursion Tree Method</strong> — Draw a tree of recursive calls and sum up the work at each level.</li>
+      <li><strong>Master Theorem</strong> — A formula that directly solves recurrences of the form T(n) = aT(n/b) + f(n).</li>
+    </ol>
+
+    <div class="section-h">4.3 Master Theorem</div>
+    <p>The <strong>Master Theorem</strong> solves recurrences of the form: <code>T(n) = aT(n/b) + f(n)</code></p>
+    <ul>
+      <li><strong>a</strong> = number of sub-problems (a ≥ 1)</li>
+      <li><strong>b</strong> = size reduction factor (b &gt; 1)</li>
+      <li><strong>f(n)</strong> = cost of work outside the recursive calls</li>
+    </ul>
+
+    <div class="table-wrap"><table>
+      <tr><th>Case</th><th>Condition</th><th>Solution</th><th>What it means</th></tr>
+      <tr><td><strong>Case 1</strong></td><td>f(n) = O(n^(log_b(a) - ε))</td><td>T(n) = Θ(n^log_b(a))</td><td>Recursion dominates — the recursive calls do most of the work</td></tr>
+      <tr><td><strong>Case 2</strong></td><td>f(n) = Θ(n^log_b(a))</td><td>T(n) = Θ(n^log_b(a) · log n)</td><td>Both are equal — multiply by log n</td></tr>
+      <tr><td><strong>Case 3</strong></td><td>f(n) = Ω(n^(log_b(a) + ε))</td><td>T(n) = Θ(f(n))</td><td>Non-recursive work dominates</td></tr>
+    </table></div>
+
+    <div class="toggle-section" id="ts-master-examples">
+      <div class="toggle-header" onclick="tog('ts-master-examples')">▼ Master Theorem — Worked Examples (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="rec-step"><strong>Example 1:</strong> T(n) = 3T(n/4) + O(n)<br>
+        a=3, b=4, f(n)=n. log₄(3) ≈ 0.79. Since n = n¹ and 1 > 0.79 + ε → Case 3 → <strong>T(n) = Θ(n)</strong></div>
+        <div class="rec-step"><strong>Example 2:</strong> T(n) = 2T(n/2) + O(n) — Merge Sort<br>
+        a=2, b=2, f(n)=n. log₂(2) = 1. Since f(n) = Θ(n¹) → Case 2 → <strong>T(n) = Θ(n log n)</strong> ✅</div>
+        <div class="rec-step"><strong>Example 3:</strong> T(n) = 4T(n/2) + O(n) — a=4, b=2<br>
+        log₂(4) = 2. f(n)=n. Since n &lt; n² → Case 1 → <strong>T(n) = Θ(n²)</strong></div>
+        <div class="rec-step"><strong>Question (i) from Past Paper:</strong> T(n) = 3T(n/4) + Θ(n²)<br>
+        a=3, b=4, log₄(3) ≈ 0.79. f(n)=n². Since n² = Ω(n^(0.79+ε)) → Case 3 → <strong>T(n) = Θ(n²)</strong></div>
+        <div class="rec-step"><strong>Question (ii) from Past Paper:</strong> T(n) = T(n/3) + T(2n/3) + cn<br>
+        This is a non-standard recurrence. Use Recursion Tree method. At each level, total work = cn. The longest path has depth log₃/₂(n). → <strong>T(n) = Θ(n log n)</strong></div>
+      </div>
+    </div>
+
+    <div class="section-h">4.4 Recursion Tree Method</div>
+    <p>Draw the recursive calls as a tree. At each node, write the cost of work done (excluding recursive calls). Sum all levels.</p>
+    <div class="toggle-section" id="ts-rectree">
+      <div class="toggle-header" onclick="tog('ts-rectree')">▼ Recursion Tree for T(n) = 2T(n/2) + n (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>RECURSION TREE</div>
+<pre>Level 0:           n                    → cost: n
+Level 1:       n/2    n/2               → cost: n/2 + n/2 = n
+Level 2:     n/4 n/4 n/4 n/4           → cost: 4 × n/4 = n
+Level 3:   n/8 ... (8 nodes)            → cost: 8 × n/8 = n
+...
+Level log n: 1 1 1 ... (n leaves)       → cost: n × 1 = n
+
+Total levels = log₂(n)
+Total cost = n × log₂(n) = O(n log n)</pre></div>
+        <p>This confirms Merge Sort is <strong>O(n log n)</strong>.</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Topic 4</span><strong>Recurrence Relations — 3 Methods</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 5: DIVIDE & CONQUER ═══ -->
+<div class="page-card" id="ch5">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+    <div class="topic-num">5</div>
+    <div>
+      <div class="topic-title">Divide &amp; Conquer</div>
+      <span class="topic-sub">Strategy · Merge Sort · Quick Sort · Relationship to Recurrences</span>
+    </div>
+    <div class="page-pill">Topic 5</div>
+  </div>
+  <div class="card-body">
+
+    <div class="section-h">5.1 What is Divide and Conquer?</div>
+    <p><strong>Divide and Conquer</strong> is a problem-solving strategy that breaks a large problem into smaller sub-problems of the same type, solves each sub-problem independently (often recursively), and then combines the solutions.</p>
+    <div class="box box-yellow"><div class="box-title">🗣️ Plain English</div>Think of a class project assigned to 30 students. Instead of one person doing everything, you divide the class into groups of 5, each group handles one part, and at the end all the parts are combined. Each group can even divide further if their part is too big.</div>
+
+    <p><strong>Three steps of Divide and Conquer:</strong></p>
+    <ol>
+      <li><strong>Divide:</strong> Break the problem into smaller sub-problems.</li>
+      <li><strong>Conquer:</strong> Solve each sub-problem recursively.</li>
+      <li><strong>Combine:</strong> Merge the solutions of sub-problems into the final answer.</li>
+    </ol>
+
+    <div class="section-h">5.2 How Merge Sort Uses Divide and Conquer</div>
+    <div class="table-wrap"><table>
+      <tr><th>D&C Step</th><th>What Merge Sort Does</th></tr>
+      <tr><td><strong>Divide</strong></td><td>Split array in half: left = A[low..mid], right = A[mid+1..high]</td></tr>
+      <tr><td><strong>Conquer</strong></td><td>Recursively call MergeSort on each half until size = 1</td></tr>
+      <tr><td><strong>Combine</strong></td><td>Merge the two sorted halves into one sorted array</td></tr>
+    </table></div>
+
+    <div class="section-h">5.3 How Quick Sort Uses Divide and Conquer</div>
+    <div class="table-wrap"><table>
+      <tr><th>D&C Step</th><th>What Quick Sort Does</th></tr>
+      <tr><td><strong>Divide</strong></td><td>Choose a pivot; partition array into [elements &lt; pivot] | pivot | [elements &gt; pivot]</td></tr>
+      <tr><td><strong>Conquer</strong></td><td>Recursively QuickSort the left and right partitions</td></tr>
+      <tr><td><strong>Combine</strong></td><td>Nothing! — the array is already sorted in-place after partitioning</td></tr>
+    </table></div>
+
+    <div class="section-h">5.4 Quick Sort vs Merge Sort — Key Differences</div>
+    <div class="table-wrap"><table>
+      <tr><th>Feature</th><th>Quick Sort</th><th>Merge Sort</th></tr>
+      <tr><td><strong>Pivot used?</strong></td><td>Yes — central to the algorithm</td><td>No</td></tr>
+      <tr><td><strong>In-place?</strong></td><td>Yes — O(log n) space</td><td>No — needs O(n) extra space</td></tr>
+      <tr><td><strong>Worst case</strong></td><td>O(n²) — bad pivot choice</td><td>O(n log n) — always</td></tr>
+      <tr><td><strong>Combine step</strong></td><td>No combining needed</td><td>Merge step required</td></tr>
+      <tr><td><strong>Stable?</strong></td><td>Not stable</td><td>Stable</td></tr>
+      <tr><td><strong>Cache performance</strong></td><td>Better (in-place)</td><td>Worse (extra memory)</td></tr>
+      <tr><td><strong>In practice</strong></td><td>Usually faster despite O(n²) worst case</td><td>Preferred when stability matters</td></tr>
+    </table></div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Topic 5</span><strong>Divide &amp; Conquer</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 6: NP & TREES ═══ -->
+<div class="page-card" id="ch6">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+    <div class="topic-num">6</div>
+    <div>
+      <div class="topic-title">NP Problems &amp; Binary Trees</div>
+      <span class="topic-sub">NP, P, NP-Hard, NP-Complete · Binary Tree Structure · Search, Insert, Delete</span>
+    </div>
+    <div class="page-pill">Topic 6</div>
+  </div>
+  <div class="card-body">
+
+    <div class="section-h">6.1 Complexity Classes: P, NP, NP-Hard, NP-Complete</div>
+    <div class="table-wrap"><table>
+      <tr><th>Class</th><th>Definition</th><th>Plain English</th><th>Example</th></tr>
+      <tr><td><strong>P</strong></td><td>Problems solvable in polynomial time</td><td>Problems a computer can actually solve quickly</td><td>Sorting, Binary Search, Shortest Path</td></tr>
+      <tr><td><strong>NP</strong></td><td>Problems whose solutions can be VERIFIED in polynomial time</td><td>Hard to solve, but easy to check if a given solution is correct</td><td>Knapsack, Satisfiability</td></tr>
+      <tr><td><strong>NP-Hard</strong></td><td>At least as hard as the hardest NP problems</td><td>Extremely hard — not even verified quickly</td><td>Halting Problem, TSP (optimisation)</td></tr>
+      <tr><td><strong>NP-Complete</strong></td><td>In NP AND NP-Hard (both conditions)</td><td>Hardest problems in NP — currently no polynomial solution known</td><td>SAT, TSP (decision), Vertex Cover</td></tr>
+    </table></div>
+
+    <div class="box box-blue"><div class="box-title">💡 The Relationship</div>
+    Every P problem is also in NP (if you can solve it quickly, you can verify it quickly). NP-Complete is the intersection of NP and NP-Hard. The big unsolved question: is P = NP? Most researchers believe P ≠ NP.
+    </div>
+
+    <div class="section-h">6.2 Binary Tree — Elements and Structure</div>
+    <p>A <strong>Binary Tree</strong> is a tree data structure where each node has at most <strong>2 children</strong> — called the <strong>left child</strong> and <strong>right child</strong>.</p>
+    <p><strong>Elements of a Binary Tree:</strong></p>
+    <ul>
+      <li><strong>Root</strong> — the topmost node (no parent)</li>
+      <li><strong>Node</strong> — each element in the tree; contains data + left pointer + right pointer</li>
+      <li><strong>Leaf</strong> — a node with no children</li>
+      <li><strong>Parent</strong> — a node that has at least one child</li>
+      <li><strong>Height</strong> — the length of the longest path from root to a leaf</li>
+      <li><strong>Level</strong> — distance from the root (root is level 0)</li>
+    </ul>
+
+    <div class="toggle-section" id="ts-bst-diagram">
+      <div class="toggle-header" onclick="tog('ts-bst-diagram')">▼ Binary Search Tree Diagram (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>Binary Search Tree Structure</div>
+<pre>          8          ← Root (Level 0)
+        /   \
+       3     10      ← Level 1
+      / \      \
+     1   6      14   ← Level 2
+        / \    /
+       4   7  13     ← Level 3 (leaves: 1, 4, 7, 13)
+
+BST Property: Left child < Parent < Right child
+Search 6: Root(8) → 6 < 8, go Left → Node(3) → 6 > 3, go Right → Node(6) ✅ Found!</pre></div>
+      </div>
+    </div>
+
+    <div class="section-h">6.3 Searching in a BST</div>
+    <p>Compare target with current node. If target &lt; node, go left. If target &gt; node, go right. If equal, found!</p>
+    <div class="box box-blue"><div class="box-title">Time Complexity of BST Search</div>Best/Average: O(log n) for a balanced BST. Worst case: O(n) if the tree is unbalanced (degenerates into a linked list).</div>
+
+    <div class="section-h">6.4 Insertion in a BST</div>
+    <p>Search for the correct empty position (following BST property), then insert the new node there.</p>
+    <div class="toggle-section" id="ts-bst-insert">
+      <div class="toggle-header" onclick="tog('ts-bst-insert')">▼ BST Insertion Example (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <p>Insert <strong>5</strong> into the BST above (root = 8):</p>
+        <ol>
+          <li>5 &lt; 8 → go left to node 3</li>
+          <li>5 &gt; 3 → go right to node 6</li>
+          <li>5 &lt; 6 → go left to node 4</li>
+          <li>5 &gt; 4 → go right — it's empty! Insert 5 here ✅</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section-h">6.5 Deletion in a BST</div>
+    <p>Three cases when deleting a node:</p>
+    <ol>
+      <li><strong>Node is a leaf</strong> — simply remove it.</li>
+      <li><strong>Node has one child</strong> — replace the node with its child.</li>
+      <li><strong>Node has two children</strong> — find the <em>inorder successor</em> (smallest node in right subtree), copy its value to the current node, then delete the successor.</li>
+    </ol>
+
+    <div class="toggle-section" id="ts-bst-delete">
+      <div class="toggle-header" onclick="tog('ts-bst-delete')">▼ BST Deletion Examples (click to expand)<span class="toggle-arrow">▼</span></div>
+      <div class="toggle-content">
+        <p><strong>Delete 1 (leaf):</strong> Node 1 has no children → just remove it.</p>
+        <p><strong>Delete 10 (one child):</strong> Node 10 has only right child 14 → replace 10 with 14.</p>
+        <p><strong>Delete 3 (two children):</strong> Node 3 has children 1 and 6. Inorder successor of 3 = 4 (smallest in right subtree of 3). Replace 3's value with 4, then delete node 4 from its original position.</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Topic 6</span><strong>NP Problems &amp; Binary Trees</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 7: PAST QUESTIONS ═══ -->
+<div class="page-card" id="ch7">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#880e4f,#c2185b);">
+    <div class="topic-num">📋</div>
+    <div>
+      <div class="topic-title">Past Exam Questions — CSC 425</div>
+      <span class="topic-sub">Adekunle Ajasin University · 2024/2025 Session · All Questions with Full Answers</span>
+    </div>
+    <div class="page-pill">2024/2025 Paper</div>
+  </div>
+  <div class="card-body">
+
+    <div class="box box-red">
+      <div class="box-title">📄 Exam Details</div>
+      <strong>Course:</strong> Algorithms &amp; Complexity Analysis (CSC 425) · <strong>Unit:</strong> 3 · <strong>Status:</strong> Compulsory<br>
+      <strong>Time Allowed:</strong> 2½ Hours · <strong>Date:</strong> 24/03/2025<br>
+      <strong>Instruction:</strong> Answer Question ONE and any other THREE questions (4 total).
+    </div>
+
+    <!-- Q1 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">1</div><div>QUESTION 1 — COMPULSORY (Answer all parts)</div></div>
+      <div class="exam-q-body">
+        <span class="past-q-badge">PAST QUESTION · 2024/2025</span>
+
+        <p><strong>1a. Define Algorithm. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          An <strong>algorithm</strong> is a finite, well-defined sequence of instructions or steps designed to solve a specific problem or accomplish a task, taking one or more inputs and producing at least one output.<br><br>
+          <strong>Key properties:</strong> Input (zero or more), Output (at least one), Definiteness (each step is clear), Finiteness (terminates), Effectiveness (each step is doable).<br><br>
+          <em>Example: The steps to find the maximum number in a list is an algorithm.</em>
+        </div>
+
+        <p style="margin-top:14px;"><strong>1b. Describe any two applications of Algorithm. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>1. Sorting:</strong> Algorithms like Merge Sort and Quick Sort are used to arrange data in a database, contact list, or any system in ascending or descending order, making retrieval faster.<br><br>
+          <strong>2. Shortest Path / Navigation:</strong> Dijkstra's algorithm is used in GPS navigation systems (Google Maps) to find the fastest or shortest route between two locations, considering distance and traffic.
+        </div>
+
+        <p style="margin-top:14px;"><strong>1c. Algorithm is a technology. Explain. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          An algorithm is a technology because, like hardware, it can be <strong>designed, improved, patented, and deployed</strong> to create competitive advantages. A better algorithm can solve a problem millions of times faster on the same hardware. For example, Google's PageRank algorithm is a core technology that made Google the world's dominant search engine — not just its hardware. Algorithm design is an ongoing field of research with real economic impact.
+        </div>
+
+        <p style="margin-top:14px;"><strong>1d. When is a problem said to be NP-Complete? (5 marks)</strong></p>
+        <div class="ans-snippet">
+          A problem is <strong>NP-Complete</strong> when it satisfies two conditions:<br>
+          1. <strong>It is in NP:</strong> A proposed solution can be verified in polynomial time.<br>
+          2. <strong>It is NP-Hard:</strong> Every problem in NP can be reduced to it in polynomial time, meaning it is at least as hard as every NP problem.<br><br>
+          <em>Examples: Boolean Satisfiability (SAT — first proven NP-Complete), Travelling Salesman Problem (decision version), Knapsack Problem.</em><br><br>
+          The significance: if any NP-Complete problem is solvable in polynomial time, all NP problems are — this would prove P = NP.
+        </div>
+
+        <p style="margin-top:14px;"><strong>1e. Differentiate between Linear and Binary Search. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>Linear Search:</strong> Checks each element one by one from start to end. Does NOT require sorted data. Time complexity: O(n) worst case. Suitable for small or unsorted lists.<br><br>
+          <strong>Binary Search:</strong> Requires sorted data. Starts at the middle; if target &lt; middle, searches left half; if target &gt; middle, searches right half. Repeats until found. Time complexity: O(log n) worst case.<br><br>
+          <strong>Key difference:</strong> Binary Search is dramatically faster for large sorted datasets (1,000,000 elements: Binary takes ≤20 comparisons vs Linear's up to 1,000,000).
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">2</div><div>QUESTION 2</div></div>
+      <div class="exam-q-body">
+        <span class="past-q-badge">PAST QUESTION · 2024/2025</span>
+
+        <p><strong>2a. Discuss Growth of Functions in relation to O, Ω, Θ, o, ω notations. (10 marks)</strong></p>
+        <div class="ans-snippet">
+          Growth of functions describes how the running time of an algorithm increases as input size n grows. We use asymptotic notations:<br><br>
+          <strong>Big-O O(g(n)):</strong> Upper bound. f(n) ≤ c·g(n) for all n ≥ n₀. Worst-case complexity. Example: Bubble Sort = O(n²).<br>
+          <strong>Omega Ω(g(n)):</strong> Lower bound. f(n) ≥ c·g(n) for all n ≥ n₀. Best-case complexity. Example: Any comparison sort = Ω(n log n).<br>
+          <strong>Theta Θ(g(n)):</strong> Tight bound. c₁·g(n) ≤ f(n) ≤ c₂·g(n). Exact growth rate. Example: Merge Sort = Θ(n log n).<br>
+          <strong>Little-o o(g(n)):</strong> Strictly less than g(n). f(n)/g(n) → 0 as n→∞. Example: n = o(n²).<br>
+          <strong>Little-omega ω(g(n)):</strong> Strictly greater than g(n). f(n)/g(n) → ∞. Example: n² = ω(n).
+        </div>
+
+        <p style="margin-top:14px;"><strong>2b. Differentiate between Best Case and Worst Case running time. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>Best Case:</strong> The minimum number of operations the algorithm performs, achieved with the most favourable input. Expressed using Ω notation. Example: Bubble Sort on an already-sorted array → O(n).<br><br>
+          <strong>Worst Case:</strong> The maximum number of operations, achieved with the least favourable input. Expressed using O notation. Example: Bubble Sort on a reverse-sorted array → O(n²).<br><br>
+          <strong>Why worst case matters:</strong> In real systems, we must guarantee performance even in the worst scenario. A medical monitoring system cannot be "usually fast" — it must always be fast.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">3</div><div>QUESTION 3</div></div>
+      <div class="exam-q-body">
+        <span class="past-q-badge">PAST QUESTION · 2024/2025</span>
+
+        <p><strong>3a. Divide and Conquer is a concept in algorithm design that solves problems recursively. Explain. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>Divide and Conquer</strong> is a recursive problem-solving technique with three steps:<br>
+          1. <strong>Divide:</strong> Break the problem into two or more smaller sub-problems of the same type.<br>
+          2. <strong>Conquer:</strong> Solve each sub-problem recursively. If the sub-problem is small enough, solve it directly (base case).<br>
+          3. <strong>Combine:</strong> Merge the solutions of sub-problems to form the final answer.<br><br>
+          <em>Example: Merge Sort — divides the array in half, recursively sorts each half, then merges. This results in O(n log n) time rather than O(n²).</em>
+        </div>
+
+        <p style="margin-top:14px;"><strong>3b. State the three methods used for solving recurrences. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>1. Substitution Method:</strong> Guess the form of the solution (e.g., "I think it's O(n log n)"), then use mathematical induction to prove that guess is correct by substituting it back into the recurrence.<br><br>
+          <strong>2. Recursion Tree Method:</strong> Draw the recursive calls as a tree. Write the cost of non-recursive work at each node. Sum the costs across each level and across all levels to get the total.<br><br>
+          <strong>3. Master Theorem:</strong> A direct formula for recurrences of the form T(n) = aT(n/b) + f(n). Compare f(n) to n^(log_b a) to determine which of 3 cases applies.
+        </div>
+
+        <p style="margin-top:14px;"><strong>3c. Using recursion tree methods, solve: (i) T(n) = 3T(n/4) + Θ(n²) &nbsp; (ii) T(n) = T(n/3) + T(2n/3) + cn</strong></p>
+        <div class="ans-snippet">
+          <strong>(i) T(n) = 3T(n/4) + Θ(n²):</strong><br>
+          Level 0: cost = n². Level 1: 3 nodes, each with cost (n/4)² = n²/16. Total = 3n²/16.<br>
+          Level 2: 9 nodes, each (n/16)². Total = 9n²/256.<br>
+          Geometric series ratio = 3/16 &lt; 1, so the series converges. Root dominates → <strong>T(n) = Θ(n²)</strong>.<br><br>
+          <strong>(ii) T(n) = T(n/3) + T(2n/3) + cn:</strong><br>
+          This has unequal splits. The tree has depth log₃/₂(n) (longest branch). At each level, total work = cn.<br>
+          Total = cn × log₃/₂(n) = cn × (log n / log(3/2)) = cn × O(log n) → <strong>T(n) = Θ(n log n)</strong>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">4</div><div>QUESTION 4</div></div>
+      <div class="exam-q-body">
+        <span class="past-q-badge">PAST QUESTION · 2024/2025</span>
+
+        <p><strong>4a. Write the Pseudocode for Insertion Sort Algorithm. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>Insertion Sort Pseudocode</div>
+<pre>InsertionSort(A, n)
+  for i = 2 to n do
+    key = A[i]
+    j = i - 1
+    while j >= 1 and A[j] > key do
+      A[j+1] = A[j]   // Shift element one position right
+      j = j - 1
+    end while
+    A[j+1] = key       // Insert key in correct position
+  end for</pre></div>
+        </div>
+
+        <p style="margin-top:14px;"><strong>4b. Analyse step-by-step the worst case running time of Insertion Sort. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>Worst case:</strong> Input is in reverse sorted order (e.g., [5, 4, 3, 2, 1]).<br><br>
+          For iteration i=2: key=A[2], inner while runs 1 time.<br>
+          For iteration i=3: inner while runs 2 times.<br>
+          For iteration i=k: inner while runs k-1 times.<br>
+          For iteration i=n: inner while runs n-1 times.<br><br>
+          Total comparisons = 1 + 2 + 3 + ... + (n-1) = n(n-1)/2 = <strong>Θ(n²)</strong>.<br>
+          Therefore, worst case running time = <strong>O(n²)</strong>.
+        </div>
+
+        <p style="margin-top:14px;"><strong>4c. State the Best and Average Case of Insertion Sort. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>Best Case — O(n):</strong> Input is already sorted. The inner while loop never executes (A[j] ≤ key always). Only the outer for loop runs n-1 times → linear time.<br><br>
+          <strong>Average Case — O(n²):</strong> For a random permutation, on average each element is compared with half the sorted sub-array before insertion. Total comparisons ≈ n²/4 = <strong>Θ(n²)</strong>.<br><br>
+          <em>Note: Despite O(n²), Insertion Sort is fast for small arrays (n ≤ 15) and is used as a subroutine in hybrid sorts like Timsort.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">5</div><div>QUESTION 5</div></div>
+      <div class="exam-q-body">
+        <span class="past-q-badge">PAST QUESTION · 2024/2025</span>
+
+        <p><strong>5a. Describe Merge Sort in relation to Divide and Conquer. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          Merge Sort is a classic implementation of Divide and Conquer:<br>
+          <strong>Divide:</strong> Split array A[low..high] at midpoint mid = (low+high)/2 into A[low..mid] and A[mid+1..high].<br>
+          <strong>Conquer:</strong> Recursively call MergeSort on each half. Base case: array of size 1 is trivially sorted.<br>
+          <strong>Combine:</strong> Merge the two sorted halves. Compare elements from each half one by one, always taking the smaller → produces a fully sorted array.<br><br>
+          The Merge step does Θ(n) work. There are Θ(log n) levels of recursion. Total: <strong>Θ(n log n)</strong>.
+        </div>
+
+        <p style="margin-top:14px;"><strong>5b. Using MergeSort Function, write the pseudocode for sorting the divided arrays. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <div class="code-wrap"><div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>MergeSort + Merge Pseudocode</div>
+<pre>MergeSort(A, low, high)
+  if low < high then
+    mid = (low + high) / 2
+    MergeSort(A, low, mid)
+    MergeSort(A, mid+1, high)
+    Merge(A, low, mid, high)
+  end if
+
+Merge(A, low, mid, high)
+  i = low;  j = mid+1;  k = low
+  while i <= mid AND j <= high do
+    if A[i] <= A[j] then
+      B[k] = A[i];  i++
+    else
+      B[k] = A[j];  j++
+    end if
+    k++
+  end while
+  while i <= mid do B[k++] = A[i++] end while
+  while j <= high do B[k++] = A[j++] end while
+  for m = low to high do A[m] = B[m] end for</pre></div>
+        </div>
+
+        <p style="margin-top:14px;"><strong>5c. Explain how Quicksort is different from Merge Sort. (5 marks)</strong></p>
+        <div class="ans-snippet">
+          <strong>Pivot vs No Pivot:</strong> Quick Sort selects a pivot and partitions the array around it. Merge Sort has no pivot — it splits at the midpoint.<br><br>
+          <strong>Combine step:</strong> Quick Sort does all the work in the Divide step (partitioning). Merge Sort does the work in the Combine step (merging). Quick Sort's combine step is trivial.<br><br>
+          <strong>Space:</strong> Quick Sort is in-place (O(log n) stack). Merge Sort needs O(n) extra memory for the temp array.<br><br>
+          <strong>Worst Case:</strong> Quick Sort = O(n²) if the pivot is always the min/max. Merge Sort = always O(n log n).<br><br>
+          <strong>Stability:</strong> Merge Sort is stable; Quick Sort is not.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">6</div><div>QUESTION 6</div></div>
+      <div class="exam-q-body">
+        <span class="past-q-badge">PAST QUESTION · 2024/2025</span>
+
+        <p><strong>6a. Describe the elements of a Binary Tree (with diagram). (5 marks)</strong></p>
+        <div class="ans-snippet">
+          A <strong>Binary Tree</strong> is a hierarchical data structure where each node has at most 2 children (left and right).<br><br>
+          <strong>Elements:</strong> Root (topmost node, no parent), Node (contains data + two child pointers), Leaf (node with no children), Parent, Sibling (nodes sharing a parent), Height (longest root-to-leaf path), Depth (distance from root).<br><br>
+          <div class="code-wrap"><div class="code-label"><span class="dot dot-g"></span>Binary Search Tree Diagram</div>
+<pre>         50          ← Root
+        /  \
+      30    70        ← Internal Nodes
+     /  \   / \
+   20   40 60  80    ← Leaves (no children)
+
+BST Rule: Left subtree values < Root < Right subtree values</pre></div>
+        </div>
+
+        <p style="margin-top:14px;"><strong>6b. Using an example, show how Searching, Insertion and Deletion are performed in a BST. (6 marks)</strong></p>
+        <div class="ans-snippet">
+          Using BST with root 50 as above:<br><br>
+          <strong>Search for 40:</strong> 40 &lt; 50 → go left (30) → 40 &gt; 30 → go right (40) → Found! O(log n).<br><br>
+          <strong>Insert 35:</strong> 35 &lt; 50 → left (30) → 35 &gt; 30 → right (40) → 35 &lt; 40 → left (empty) → Insert 35 as left child of 40.<br><br>
+          <strong>Delete 30 (two children):</strong> Find inorder successor = smallest in right subtree of 30 = 35. Replace 30's value with 35. Delete node 35 from its original position. Result: 35 takes 30's place with children 20 and 40.
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Past Questions</span><strong>2024/2025 Examination — All Questions with Model Answers</strong></div>
+</div>
+
+
+<!-- ═══ CHAPTER 8: LIKELY QUESTIONS ═══ -->
+<div class="page-card" id="ch8">
+  <div class="topic-banner" style="background:linear-gradient(135deg,#f57f17,#ff8f00);">
+    <div class="topic-num">🔮</div>
+    <div>
+      <div class="topic-title">Likely Exam Questions &amp; Model Answers</div>
+      <span class="topic-sub">Predicted based on past patterns, syllabus, and course content</span>
+    </div>
+    <div class="page-pill">Exam Prep</div>
+  </div>
+  <div class="card-body">
+
+    <div class="box box-yellow">
+      <div class="box-title">📌 How these were chosen</div>
+      These questions are based on: (1) topics that appeared in the 2024/2025 paper and are likely to recur in modified form, (2) topics in the CSC 425 syllabus not yet tested, (3) classic algorithm questions that Nigerian universities frequently examine.
+    </div>
+
+    <!-- LQ1 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L1</div><div>Write the pseudocode for Bubble Sort and trace through the array [5, 1, 4, 2, 8]. Show each pass.</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 2.1 — Bubble Sort &amp; the animation above</span>
+        <div class="ans-snippet">
+          <strong>Pseudocode:</strong>
+          <div class="code-wrap"><div class="code-label"><span class="dot dot-g"></span>Bubble Sort</div>
+<pre>for i = 1 to n-1 do
+  for j = 1 to n-i do
+    if A[j] > A[j+1] then
+      swap A[j] and A[j+1]
+    end if
+  end for
+end for</pre></div>
+          <strong>Trace on [5, 1, 4, 2, 8]:</strong><br>
+          Pass 1: [1,4,2,5,8] (5 bubbles up, but 8 already max)<br>
+          Pass 2: [1,2,4,5,8]<br>
+          Pass 3: [1,2,4,5,8] — no swaps → sorted ✅<br><br>
+          <strong>Time Complexity:</strong> Worst = O(n²), Best = O(n), Space = O(1).
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ2 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L2</div><div>Apply the Master Theorem to solve: (a) T(n) = 9T(n/3) + n &nbsp; (b) T(n) = 2T(n/4) + √n &nbsp; (c) T(n) = 7T(n/2) + n²</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 4.3 — Master Theorem</span>
+        <div class="ans-snippet">
+          <strong>(a) T(n) = 9T(n/3) + n:</strong> a=9, b=3, f(n)=n. log₃(9) = 2. n = O(n^(2-1)) → Case 1 → <strong>T(n) = Θ(n²)</strong>.<br><br>
+          <strong>(b) T(n) = 2T(n/4) + √n:</strong> a=2, b=4, f(n)=n^(1/2). log₄(2) = 1/2. f(n) = Θ(n^(1/2)) = Θ(n^log₄2) → Case 2 → <strong>T(n) = Θ(√n · log n)</strong>.<br><br>
+          <strong>(c) T(n) = 7T(n/2) + n²:</strong> a=7, b=2, f(n)=n². log₂(7) ≈ 2.81. Since n² = O(n^(2.81 - 0.81)) → Case 1 → <strong>T(n) = Θ(n^log₂7) ≈ Θ(n^2.81)</strong>.
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ3 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L3</div><div>Explain Selection Sort. Write its pseudocode and trace through [64, 25, 12, 22, 11]. State its time complexity.</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 2.2 — Selection Sort &amp; animation</span>
+        <div class="ans-snippet">
+          Selection Sort scans the unsorted portion to find the minimum element and swaps it to the front.<br><br>
+          <strong>Pseudocode:</strong> <code>for k=1 to n-1: find min in A[k..n]; swap A[k] with A[min]</code><br><br>
+          <strong>Trace on [64, 25, 12, 22, 11]:</strong><br>
+          Pass 1: min=11 (index 4) → swap with 64 → [11, 25, 12, 22, 64]<br>
+          Pass 2: min=12 (index 2) → swap with 25 → [11, 12, 25, 22, 64]<br>
+          Pass 3: min=22 → swap with 25 → [11, 12, 22, 25, 64]<br>
+          Pass 4: min=25, already in place → [11, 12, 22, 25, 64] ✅<br><br>
+          <strong>Time:</strong> O(n²) in all cases. Space: O(1). Makes exactly n-1 swaps (advantage over Bubble Sort).
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ4 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L4</div><div>What is the difference between P, NP, NP-Hard, and NP-Complete problems? Give one example of each.</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 6.1 — Complexity Classes</span>
+        <div class="ans-snippet">
+          <strong>P (Polynomial):</strong> Problems that can be SOLVED in polynomial time. Example: Sorting (O(n log n)), Binary Search O(log n).<br><br>
+          <strong>NP (Non-deterministic Polynomial):</strong> Problems whose solutions can be VERIFIED in polynomial time. Example: Integer factorisation — given a factorisation, checking it is easy; finding it is hard.<br><br>
+          <strong>NP-Hard:</strong> Problems as hard as any NP problem, but not necessarily in NP (cannot even be verified quickly). Example: Halting Problem (undecidable), TSP optimisation version.<br><br>
+          <strong>NP-Complete:</strong> Problems that are BOTH in NP and NP-Hard. Example: Boolean SAT (Cook-Levin theorem, 1971), TSP decision version, Graph Colouring.<br><br>
+          <strong>Relationship:</strong> P ⊆ NP. NP-Complete = NP ∩ NP-Hard. If P = NP (unproven), all NP problems could be solved efficiently.
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ5 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L5</div><div>Trace Quick Sort on the array [3, 6, 8, 10, 1, 2, 1]. Use the last element as pivot. Show all partitions.</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 2.5 — Quick Sort &amp; animation</span>
+        <div class="ans-snippet">
+          Array: [3, 6, 8, 10, 1, 2, 1]. Pivot = 1 (last element).<br><br>
+          <strong>Partition step:</strong> i = -1. Scan j from 0 to 5:<br>
+          j=0: A[0]=3 &gt; 1, skip. j=1: 6&gt;1, skip. j=2: 8&gt;1, skip. j=3: 10&gt;1, skip.<br>
+          j=4: A[4]=1 ≤ 1 → i=0, swap A[0] and A[4] → [1, 6, 8, 10, 3, 2, 1]<br>
+          j=5: A[5]=2 &gt; 1, skip.<br>
+          Swap A[i+1]=A[1] with pivot A[6]=1 → [1, 1, 8, 10, 3, 2, 6]<br>
+          Pivot 1 is now at index 1. ✅<br><br>
+          <strong>Recurse on left [1]</strong> — size 1, done.<br>
+          <strong>Recurse on right [8, 10, 3, 2, 6]</strong> — pivot=6, continue partitioning...<br>
+          Final sorted: <strong>[1, 1, 2, 3, 6, 8, 10]</strong> ✅
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ6 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L6</div><div>Define and prove that f(n) = 2n² + 3n + 1 is O(n²). Also state if it is Θ(n²).</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 3.2 — Big-O definition &amp; proof</span>
+        <div class="ans-snippet">
+          <strong>Prove f(n) = 2n² + 3n + 1 is O(n²):</strong><br>
+          We need to find constants c and n₀ such that 2n² + 3n + 1 ≤ c·n² for all n ≥ n₀.<br><br>
+          For n ≥ 1: 3n ≤ 3n² and 1 ≤ n².<br>
+          So: 2n² + 3n + 1 ≤ 2n² + 3n² + n² = 6n².<br>
+          Choose <strong>c = 6</strong> and <strong>n₀ = 1</strong>. Then 2n² + 3n + 1 ≤ 6n² for all n ≥ 1. ✅<br>
+          Therefore f(n) = <strong>O(n²)</strong>.<br><br>
+          <strong>Is it Θ(n²)?</strong> Yes. Also need to show 2n² + 3n + 1 ≥ c·n² for some c.<br>
+          Clearly 2n² + 3n + 1 ≥ 2n² for all n ≥ 1. Choose c₁ = 2.<br>
+          So f(n) = Ω(n²). Since f(n) = O(n²) AND f(n) = Ω(n²) → f(n) = <strong>Θ(n²)</strong>. ✅
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ7 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L7</div><div>Explain what a stable sorting algorithm is. Which of the five sorting algorithms (Bubble, Selection, Insertion, Merge, Quick) are stable? Justify your answer.</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 2.6 — Sorting Comparison Table</span>
+        <div class="ans-snippet">
+          A <strong>stable sorting algorithm</strong> preserves the relative order of elements with equal keys. If two records have the same value and record A appears before record B in the original array, A must also appear before B in the sorted result.<br><br>
+          <strong>Why it matters:</strong> If you sort students by score, a stable sort keeps students with equal scores in their original registration order.<br><br>
+          <strong>Stable sorts:</strong> Bubble Sort ✅ (adjacent swaps never change equal elements' order), Insertion Sort ✅ (shifts right, never swaps equal elements past each other), Merge Sort ✅ (during merge, left element is preferred when equal).<br><br>
+          <strong>Unstable sorts:</strong> Selection Sort ❌ (the long-range swap can disrupt equal elements), Quick Sort ❌ (partitioning can move equal elements past each other).
+        </div>
+      </div>
+    </div>
+
+    <!-- LQ8 -->
+    <div class="exam-q">
+      <div class="exam-q-header"><div class="q-num">L8</div><div>What is the Travelling Salesman Problem (TSP)? Why is it considered NP-Complete? How does the Brute Force approach solve it and what is its complexity?</div></div>
+      <div class="exam-q-body">
+        <span class="likely-badge">🔮 LIKELY QUESTION</span>
+        <span class="hint">📍 See Topic 1.4 &amp; Topic 6.1 — NP-Complete</span>
+        <div class="ans-snippet">
+          <strong>TSP (Travelling Salesman Problem):</strong> Given a list of n cities and distances between each pair, find the shortest possible route that visits every city exactly once and returns to the starting city.<br><br>
+          <strong>Why NP-Complete:</strong> (1) It's in NP — given a proposed route, we can verify its total distance in O(n) time. (2) It's NP-Hard — it can be reduced from other NP-Complete problems (Hamiltonian Cycle). It is NP-Complete in its decision form ("Is there a tour shorter than k?").<br><br>
+          <strong>Brute Force solution:</strong> Try all possible orderings (permutations) of n cities. Number of routes = (n-1)!/2. For n=10: 181,440 routes. For n=20: 60 trillion routes.<br><br>
+          <strong>Complexity:</strong> O(n!) — factorial time. Completely impractical for large n. This is why real-world GPS uses approximate heuristic algorithms.
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer"><span>CSC 425 · Likely Questions</span><strong>8 High-Probability Exam Questions with Full Model Answers</strong></div>
+</div>
+
+
+<!-- END CARD -->
+<div class="end-card">
+  <h2>Good luck in your exam! 🎓</h2>
+  <p>CSC 425 — Algorithms &amp; Complexity Analysis · Dept. of Computer Science · AAUA · 2024/2025</p>
+  <p style="margin-top:8px;">Use the animations above to truly understand how each sort works — not just the pseudocode, but the <em>why</em>. That understanding is what earns marks.</p>
+</div>
+
+</div><!-- /shell -->
+
+<script>
+// ═══ Dark mode toggle ═══
+function toggleDark() {
+  const body = document.body;
+  const btn = document.getElementById('themeBtn');
+  const isDark = body.getAttribute('data-theme') === 'dark';
+  body.setAttribute('data-theme', isDark ? '' : 'dark');
+  btn.textContent = isDark ? '🌙 Dark' : '☀️ Light';
+}
+
+// ═══ Toggle sections ═══
+function tog(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════
+//   SORTING VISUALIZER ENGINE
+// ═══════════════════════════════════════════════════
+
+const INITIAL_ARRAYS = {
+  bubble:    [64, 34, 25, 12, 22, 11, 90],
+  selection: [64, 25, 12, 22, 11, 90, 44],
+  insertion: [5,  2,  4,  6,  1,  3,  7],
+  merge:     [38, 27, 43, 3,  9,  82, 10],
+  quick:     [10, 7,  8,  9,  1,  5,  3]
+};
+
+const state = {};
+
+function initViz(type) {
+  const arr = [...INITIAL_ARRAYS[type]];
+  state[type] = {
+    arr: arr.slice(),
+    steps: [],
+    stepIndex: 0,
+    playing: false,
+    timer: null
+  };
+  generateSteps(type);
+  renderBars(type, arr, [], [], [], -1);
+  document.getElementById('status-' + type).textContent = 'Press ▶ Play to watch, or ⏭ Step to go one at a time.';
+  document.getElementById('stepinfo-' + type).textContent = '';
+  document.getElementById('play-' + type).textContent = '▶ Play';
+}
+
+function renderBars(type, arr, comparing, swapping, sorted, pivot) {
+  const canvas = document.getElementById('canvas-' + type);
+  const maxVal = Math.max(...arr);
+  canvas.innerHTML = '';
+  arr.forEach((val, i) => {
+    const height = Math.round((val / maxVal) * 90) + 20;
+    let cls = 'bar-default';
+    if (sorted.includes(i)) cls = 'bar-sorted';
+    if (comparing.includes(i)) cls = 'bar-comparing';
+    if (swapping.includes(i)) cls = 'bar-swapping';
+    if (i === pivot) cls = 'bar-pivot';
+    const bar = document.createElement('div');
+    bar.className = 'sort-bar';
+    bar.innerHTML = `<div class="sort-bar-label">${val}</div><div class="sort-bar-inner ${cls}" style="height:${height}px;width:clamp(22px,calc((100% - 60px)/7),44px)"></div>`;
+    canvas.appendChild(bar);
+  });
+}
+
+// ── STEP GENERATORS ──
+
+function generateSteps(type) {
+  const arr = [...INITIAL_ARRAYS[type]];
+  const steps = [];
+  if (type === 'bubble') genBubble(arr, steps);
+  else if (type === 'selection') genSelection(arr, steps);
+  else if (type === 'insertion') genInsertion(arr, steps);
+  else if (type === 'merge') genMerge(arr, steps);
+  else if (type === 'quick') genQuick(arr, steps);
+  state[type].steps = steps;
+}
+
+function genBubble(arr, steps) {
+  const a = arr.slice();
+  const n = a.length;
+  const sorted = [];
+  steps.push({arr:a.slice(), comp:[], swap:[], sorted:sorted.slice(), pivot:-1, msg:'Starting Bubble Sort. Will compare adjacent elements.', info:''});
+  for (let i = 0; i < n-1; i++) {
+    for (let j = 0; j < n-i-1; j++) {
+      steps.push({arr:a.slice(), comp:[j,j+1], swap:[], sorted:sorted.slice(), pivot:-1, msg:`Pass ${i+1}: Comparing A[${j}]=${a[j]} and A[${j+1}]=${a[j+1]}`, info:a[j]>a[j+1]?'→ Swap needed':'→ No swap'});
+      if (a[j] > a[j+1]) {
+        [a[j], a[j+1]] = [a[j+1], a[j]];
+        steps.push({arr:a.slice(), comp:[], swap:[j,j+1], sorted:sorted.slice(), pivot:-1, msg:`Swapped ${a[j+1]} and ${a[j]}`, info:'Elements swapped ↔'});
+      }
+    }
+    sorted.unshift(n-1-i);
+    steps.push({arr:a.slice(), comp:[], swap:[], sorted:sorted.slice(), pivot:-1, msg:`Pass ${i+1} complete. Position ${n-1-i} is now sorted.`, info:''});
+  }
+  sorted.unshift(0);
+  steps.push({arr:a.slice(), comp:[], swap:[], sorted:Array.from({length:n},(_,i)=>i), pivot:-1, msg:'✅ Array is fully sorted!', info:a.join(' → ')});
+}
+
+function genSelection(arr, steps) {
+  const a = arr.slice();
+  const n = a.length;
+  const sorted = [];
+  steps.push({arr:a.slice(), comp:[], swap:[], sorted:[], pivot:-1, msg:'Starting Selection Sort. Will find minimum each pass.', info:''});
+  for (let k = 0; k < n-1; k++) {
+    let minIdx = k;
+    for (let i = k+1; i < n; i++) {
+      steps.push({arr:a.slice(), comp:[i, minIdx], swap:[], sorted:sorted.slice(), pivot:-1, msg:`Finding min in A[${k}..${n-1}]: Comparing A[${i}]=${a[i]} with current min A[${minIdx}]=${a[minIdx]}`, info:a[i]<a[minIdx]?'→ New minimum found!':'→ Current min stays'});
+      if (a[i] < a[minIdx]) minIdx = i;
+    }
+    if (minIdx !== k) {
+      steps.push({arr:a.slice(), comp:[], swap:[k,minIdx], sorted:sorted.slice(), pivot:-1, msg:`Swapping A[${k}]=${a[k]} with minimum A[${minIdx}]=${a[minIdx]}`, info:'Placing minimum at correct position'});
+      [a[k], a[minIdx]] = [a[minIdx], a[k]];
+    }
+    sorted.push(k);
+    steps.push({arr:a.slice(), comp:[], swap:[], sorted:sorted.slice(), pivot:-1, msg:`Position ${k} sorted. ${a[k]} is in its correct place.`, info:''});
+  }
+  sorted.push(n-1);
+  steps.push({arr:a.slice(), comp:[], swap:[], sorted:Array.from({length:n},(_,i)=>i), pivot:-1, msg:'✅ Array fully sorted!', info:a.join(' → ')});
+}
+
+function genInsertion(arr, steps) {
+  const a = arr.slice();
+  const n = a.length;
+  steps.push({arr:a.slice(), comp:[], swap:[], sorted:[0], pivot:-1, msg:'Starting Insertion Sort. A[0] is trivially sorted.', info:''});
+  for (let i = 1; i < n; i++) {
+    const key = a[i];
+    steps.push({arr:a.slice(), comp:[i], swap:[], sorted:Array.from({length:i},(_,x)=>x), pivot:-1, msg:`Picking key = A[${i}] = ${key}. Will insert into sorted section.`, info:`Sorted part: [${a.slice(0,i).join(', ')}] | Key: ${key}`});
+    let j = i - 1;
+    while (j >= 0 && a[j] > key) {
+      steps.push({arr:a.slice(), comp:[j,j+1], swap:[], sorted:Array.from({length:i},(_,x)=>x), pivot:-1, msg:`A[${j}]=${a[j]} > key=${key} → shift A[${j}] right`, info:'Shifting element one position right'});
+      a[j+1] = a[j];
+      j--;
+    }
+    a[j+1] = key;
+    steps.push({arr:a.slice(), comp:[], swap:[j+1], sorted:Array.from({length:i+1},(_,x)=>x), pivot:-1, msg:`Inserted key=${key} at position ${j+1}.`, info:`Sorted section now: [${a.slice(0,i+1).join(', ')}]`});
+  }
+  steps.push({arr:a.slice(), comp:[], swap:[], sorted:Array.from({length:n},(_,i)=>i), pivot:-1, msg:'✅ Array fully sorted!', info:a.join(' → ')});
+}
+
+function genMerge(arr, steps) {
+  const a = arr.slice();
+  const allSteps = steps;
+  allSteps.push({arr:a.slice(), comp:[], swap:[], sorted:[], pivot:-1, msg:'Starting Merge Sort. Will split array recursively then merge.', info:''});
+  function mergeSort(a, low, high) {
+    if (low >= high) return;
+    const mid = Math.floor((low + high) / 2);
+    allSteps.push({arr:a.slice(), comp:[low,high], swap:[], sorted:[], pivot:mid, msg:`Dividing A[${low}..${high}] at mid=${mid}`, info:`Left: [${a.slice(low,mid+1).join(',')}] | Right: [${a.slice(mid+1,high+1).join(',')}]`});
+    mergeSort(a, low, mid);
+    mergeSort(a, mid+1, high);
+    merge(a, low, mid, high);
+  }
+  function merge(a, low, mid, high) {
+    const left = a.slice(low, mid+1);
+    const right = a.slice(mid+1, high+1);
+    let i=0, j=0, k=low;
+    allSteps.push({arr:a.slice(), comp:Array.from({length:high-low+1},(_,x)=>low+x), swap:[], sorted:[], pivot:-1, msg:`Merging A[${low}..${mid}] and A[${mid+1}..${high}]`, info:`Left: [${left.join(',')}] | Right: [${right.join(',')}]`});
+    while (i < left.length && j < right.length) {
+      if (left[i] <= right[j]) { a[k++] = left[i++]; }
+      else { a[k++] = right[j++]; }
+    }
+    while (i < left.length) a[k++] = left[i++];
+    while (j < right.length) a[k++] = right[j++];
+    const sortedIdxs = Array.from({length:high-low+1},(_,x)=>low+x);
+    allSteps.push({arr:a.slice(), comp:[], swap:sortedIdxs, sorted:sortedIdxs, pivot:-1, msg:`Merged → [${a.slice(low,high+1).join(', ')}]`, info:'Section is now sorted'});
+  }
+  mergeSort(a, 0, a.length-1);
+  allSteps.push({arr:a.slice(), comp:[], swap:[], sorted:Array.from({length:a.length},(_,i)=>i), pivot:-1, msg:'✅ Array fully sorted!', info:a.join(' → ')});
+}
+
+function genQuick(arr, steps) {
+  const a = arr.slice();
+  const allSteps = steps;
+  allSteps.push({arr:a.slice(), comp:[], swap:[], sorted:[], pivot:-1, msg:'Starting Quick Sort. Last element is the pivot each time.', info:'Purple = pivot'});
+  function quickSort(a, low, high, sortedSet) {
+    if (low >= high) { sortedSet.add(low); return; }
+    const pivotIdx = partition(a, low, high, sortedSet);
+    sortedSet.add(pivotIdx);
+    quickSort(a, low, pivotIdx-1, sortedSet);
+    quickSort(a, pivotIdx+1, high, sortedSet);
+  }
+  function partition(a, low, high, sortedSet) {
+    const pivot = a[high];
+    allSteps.push({arr:a.slice(), comp:[], swap:[], sorted:[...sortedSet], pivot:high, msg:`Partition A[${low}..${high}]. Pivot = ${pivot} at index ${high}`, info:`Elements ≤ ${pivot} go left, > ${pivot} go right`});
+    let i = low - 1;
+    for (let j = low; j < high; j++) {
+      allSteps.push({arr:a.slice(), comp:[j], swap:[], sorted:[...sortedSet], pivot:high, msg:`Comparing A[${j}]=${a[j]} with pivot=${pivot}`, info:a[j]<=pivot?`${a[j]} ≤ ${pivot} → swap to left side`:`${a[j]} > ${pivot} → stays right`});
+      if (a[j] <= pivot) {
+        i++;
+        if (i !== j) {
+          [a[i], a[j]] = [a[j], a[i]];
+          allSteps.push({arr:a.slice(), comp:[], swap:[i,j], sorted:[...sortedSet], pivot:high, msg:`Swapped A[${i}]=${a[i]} and A[${j}]=${a[j]}`, info:'Moving smaller element left'});
+        }
+      }
+    }
+    [a[i+1], a[high]] = [a[high], a[i+1]];
+    allSteps.push({arr:a.slice(), comp:[], swap:[i+1], sorted:[...sortedSet, i+1], pivot:-1, msg:`Pivot ${pivot} placed at index ${i+1}. ✅ Pivot is in final position!`, info:''});
+    return i+1;
+  }
+  const sortedSet = new Set();
+  quickSort(a, 0, a.length-1, sortedSet);
+  allSteps.push({arr:a.slice(), comp:[], swap:[], sorted:Array.from({length:a.length},(_,i)=>i), pivot:-1, msg:'✅ Array fully sorted!', info:a.join(' → ')});
+}
+
+// ── PLAYBACK CONTROLS ──
+
+function renderStep(type, s) {
+  renderBars(type, s.arr, s.comp, s.swap, s.sorted, s.pivot);
+  document.getElementById('status-' + type).textContent = s.msg;
+  document.getElementById('stepinfo-' + type).textContent = s.info;
+}
+
+function stepViz(type) {
+  const s = state[type];
+  if (s.stepIndex >= s.steps.length) { s.stepIndex = 0; }
+  renderStep(type, s.steps[s.stepIndex]);
+  s.stepIndex++;
+}
+
+function playViz(type) {
+  const s = state[type];
+  const btn = document.getElementById('play-' + type);
+  if (s.playing) {
+    s.playing = false;
+    clearTimeout(s.timer);
+    btn.textContent = '▶ Play';
+    return;
+  }
+  s.playing = true;
+  btn.textContent = '⏸ Pause';
+  function next() {
+    if (!s.playing || s.stepIndex >= s.steps.length) {
+      s.playing = false;
+      btn.textContent = '↺ Done — Reset?';
+      return;
+    }
+    renderStep(type, s.steps[s.stepIndex]);
+    s.stepIndex++;
+    const speedEl = document.getElementById('speed-' + type);
+    const delay = speedEl ? (1100 - parseInt(speedEl.value)) : 500;
+    s.timer = setTimeout(next, delay);
+  }
+  next();
+}
+
+function resetViz(type) {
+  const s = state[type];
+  s.playing = false;
+  clearTimeout(s.timer);
+  s.stepIndex = 0;
+  document.getElementById('play-' + type).textContent = '▶ Play';
+  initViz(type);
+}
+
+// ── INIT ALL ──
+['bubble','selection','insertion','merge','quick'].forEach(t => initViz(t));
+</script>
+</body>
+</html>
